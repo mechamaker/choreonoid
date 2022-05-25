@@ -151,8 +151,7 @@ private:
     std::unordered_map<string, Vector4> colorMap;
 
     void createColorMap(
-        const pugi::xml_object_range<pugi::xml_named_node_iterator>&
-            materialNodes);
+        const std::vector<xml_node> materialNodes);
     vector<LinkPtr> findRootLinks(
         const std::unordered_map<string, LinkPtr>& linkMap);
     bool loadLink(LinkPtr link, const xml_node& linkNode);
@@ -267,11 +266,17 @@ bool URDFBodyLoader::Impl::load(Body* body, const string& filename)
     }
 
     // creates a color dictionary before parsing the robot model
-    auto materialNodes = robotNode.children(MATERIAL);
+    auto linkNodes = robotNode.children(LINK);
+    std::vector<xml_node> materialNodes;
+    for (xml_node linkNode : linkNodes) {
+        for (xml_node& visualNode : linkNode.children(VISUAL)) {
+            materialNodes.push_back(visualNode.child(MATERIAL));
+        }
+    }
+    // auto materialNodes = robotNode.children(MATERIAL);
     createColorMap(materialNodes);
 
     // creates a link dictionary by loading all links for tree construction
-    auto linkNodes = robotNode.children(LINK);
     std::unordered_map<string, LinkPtr> linkMap(std::distance(linkNodes.begin(), linkNodes.end()));
 
     // loads all links
@@ -322,11 +327,11 @@ bool URDFBodyLoader::Impl::load(Body* body, const string& filename)
 
 
 void URDFBodyLoader::Impl::createColorMap(
-    const pugi::xml_object_range<pugi::xml_named_node_iterator>& materialNodes)
+    const std::vector<xml_node> materialNodes)
 {
-    colorMap.reserve(std::distance(materialNodes.begin(), materialNodes.end()));
+    colorMap.reserve(materialNodes.size());
 
-    for (xml_node& materialNode : materialNodes) {
+    for (xml_node materialNode : materialNodes) {
         const string materialName = materialNode.attribute(NAME).as_string();
         const xml_node& colorNode = materialNode.child(COLOR);
         const xml_node& textureNode = materialNode.child(TEXTURE);
