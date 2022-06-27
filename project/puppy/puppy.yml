@@ -16,6 +16,10 @@ links:
       0.00000011460,  0.000127532610,   0.000978146233 ]
     elements:
       -
+        type: RateGyroSensor
+        name: GyroSensor
+        id: 0
+      -
         type: Collision
         resource:
           uri: "puppy.dae"
@@ -54,7 +58,7 @@ links:
     name: wheel_left
     parent: body
     jointType: revolute
-    jointAxis: X
+    jointAxis: -X
     jointRange: [ -720, 720 ]
     jointId: 1
     translation: [ 0.033959, -0.014173, -0.092973]
