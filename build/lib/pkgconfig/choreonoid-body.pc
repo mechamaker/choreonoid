@@ -1,0 +1,18 @@
+# pkg-config source file
+
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/choreonoid-1.8
+subdir=choreonoid-1.8
+sharedir=/usr/local/share/choreonoid-1.8
+plugindir=${exec_prefix}/lib/choreonoid-1.8
+simplecontrollerdir=${plugindir}/simplecontroller
+customizerdir=${plugindir}/simplecontroller/customizer
+
+Name: choreonoid-body
+Description: Choreonoid Body library
+Version: 1.8.0
+Requires: choreonoid-util = 1.8.0
+Conflicts:
+Libs: -lCnoidBody

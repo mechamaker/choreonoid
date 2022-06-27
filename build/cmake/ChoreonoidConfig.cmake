@@ -1,0 +1,195 @@
+# Use the following variables to compile and link against Choreonoid:
+# CHOREONOID_FOUND                 - True if Choreonoid was found on your system
+# CHOREONOID_VERSION_STRING        - A human-readable string containing the version
+# CHOREONOID_VERSION_MAJOR         - The major version of Choreonoid
+# CHOREONOID_VERSION_MINOR         - The minor version of Choreonoid
+# CHOREONOID_VERSION_PATCH         - The patch version of Choreonoid
+# CHOREONOID_ROOT_DIR              - The base directory of Choreonoid
+# CHOREONOID_CXX_STANDARD          - The c++ standard version used to build Choreonoid (11, 14, or 17)
+# CHOREONOID_COMPILE_DEFINITIONS   - Definitions needed to build with Choreonoid
+# CHOREONOID_INCLUDE_DIRS          - List of directories of Choreonoid and it's dependencies
+# CHOREONOID_LIBRARY_DIRS          - List of directories of Choreonoid and it's dependencies
+# CHOREONOID_UTIL_LIBRARIES        - List of libraries to use the CnoidUtil libary
+# CHOREONOID_BASE_LIBRARIES        - List of libraries to use the CnoidBase libary
+# CHOREONOID_BODY_LIBRARIES        - List of libraries to use the CnoidBody libary
+# CHOREONOID_BODY_PLUGIN_LIBRARIES - List of libraries to use the CnoidBody libary
+# CHOREONOID_SKIP_QT_CONFIG        - Set true in advance to disable the Qt library setup
+#
+# Set the following variables to change the behaviour of the functions provided by this module
+# CHOREONOID_INSTALL_SDK      - Set on if you want to install SDK files
+
+set(CHOREONOID_ROOT_DIR /usr/local)
+
+if(NOT CMAKE_VERSION VERSION_LESS 3.7.0)
+  if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX "/usr/local" CACHE PATH "Install path prefix, prepended onto install directories." FORCE)
+  endif()
+endif()
+
+set(CHOREONOID_VERSION_STRING 1.8.0)
+set(CHOREONOID_VERSION_MAJOR 1)
+set(CHOREONOID_VERSION_MINOR 8)
+set(CHOREONOID_VERSION_PATCH 0)
+
+set(CHOREONOID_VERSION_SUBDIR choreonoid-1.8)
+set(CHOREONOID_BIN_SUBDIR bin)
+set(CHOREONOID_BIN_DIR "/usr/local/bin")
+set(CHOREONOID_LIB_SUBDIR lib)
+set(CHOREONOID_LIB_DIR "/usr/local/lib")
+set(CHOREONOID_PLUGIN_SUBDIR lib/choreonoid-1.8)
+set(CHOREONOID_PLUGIN_DIR "/usr/local/lib/choreonoid-1.8")
+set(CHOREONOID_HEADER_SUBDIR include/choreonoid-1.8)
+set(CHOREONOID_SHARE_SUBDIR share/choreonoid-1.8)
+set(CHOREONOID_SHARE_DIR "/usr/local//usr/local/share/choreonoid-1.8")
+set(CHOREONOID_CMAKE_CONFIG_SUBDIR "share/choreonoid/cmake")
+set(CHOREONOID_ENABLE_INSTALL_RPATH ON)
+
+set(CHOREONOID_CXX_STANDARD "17")
+set(CHOREONOID_COMPILE_DEFINITIONS "$<$<CONFIG:Debug>:CNOID_DEBUG>")
+set(CHOREONOID_DEFAULT_FVISIBILITY_HIDDEN ON)
+set(CHOREONOID_INCLUDE_DIRS "/usr/local/include/choreonoid-1.8;/usr/include;/usr/include/python3.8;/usr/include/eigen3")
+set(CHOREONOID_LIBRARY_DIRS "/usr/local/lib;/usr/local/lib/choreonoid-1.8;/usr/lib;/usr/lib/x86_64-linux-gnu")
+
+if(true)
+  find_package(Boost 1.71.0 EXACT COMPONENTS system)
+  list(APPEND CHOREONOID_UTIL_LIBRARIES Boost::system)
+endif()
+
+add_library(Choreonoid::CnoidUtil SHARED IMPORTED GLOBAL)
+if(WIN32)
+  set_target_properties(Choreonoid::CnoidUtil PROPERTIES
+    IMPORTED_LOCATION ${CHOREONOID_BIN_DIR}/CnoidUtil.dll
+    IMPORTED_IMPLIB ${CHOREONOID_LIB_DIR}/CnoidUtil.lib
+    IMPORTED_LOCATION_DEBUG ${CHOREONOID_BIN_DIR}/CnoidUtild.dll
+    IMPORTED_IMPLIB_DEBUG ${CHOREONOID_LIB_DIR}/CnoidUtild.lib
+    IMPORTED_CONFIGURATIONS "RELEASE;DEBUG")
+else()
+  set_target_properties(Choreonoid::CnoidUtil PROPERTIES
+    IMPORTED_LOCATION ${CHOREONOID_LIB_DIR}/libCnoidUtil.so)
+endif()
+
+# CMake 3.10 does not allow the target_compile_definitions and target_include_directories commands
+# to specify INTERFACE for an imported library, and it is supported in CMake 3.11 and later.
+# To be able to use CMake 3.10, the following alternative descriptions with the set_property command are used.
+#target_compile_definitions(Choreonoid::CnoidUtil INTERFACE ${CHOREONOID_COMPILE_DEFINITIONS})
+#target_include_directories(Choreonoid::CnoidUtil INTERFACE ${CHOREONOID_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+set_property(TARGET Choreonoid::CnoidUtil APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS
+  ${CHOREONOID_COMPILE_DEFINITIONS})
+set_property(TARGET Choreonoid::CnoidUtil APPEND PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+  ${CHOREONOID_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+
+target_link_libraries(Choreonoid::CnoidUtil INTERFACE fmt;stdc++fs;${Boost_LIBRARIES})
+set(CHOREONOID_UTIL_LIBRARIES Choreonoid::CnoidUtil)
+
+add_library(Choreonoid::CnoidBase SHARED IMPORTED GLOBAL)
+if(WIN32)
+  set_target_properties(Choreonoid::CnoidBase PROPERTIES
+    IMPORTED_LOCATION ${CHOREONOID_BIN_DIR}/CnoidBase.dll
+    IMPORTED_IMPLIB ${CHOREONOID_LIB_DIR}/CnoidBase.lib
+    IMPORTED_LOCATION_DEBUG ${CHOREONOID_BIN_DIR}/CnoidBased.dll
+    IMPORTED_IMPLIB_DEBUG ${CHOREONOID_LIB_DIR}/CnoidBased.lib
+    IMPORTED_CONFIGURATIONS "RELEASE;DEBUG")
+else()
+  set_target_properties(Choreonoid::CnoidBase PROPERTIES
+    IMPORTED_LOCATION ${CHOREONOID_LIB_DIR}/libCnoidBase.so)
+endif()
+target_link_libraries(Choreonoid::CnoidBase INTERFACE Choreonoid::CnoidUtil)
+set(CHOREONOID_BASE_LIBRARIES Choreonoid::CnoidBase)
+
+if(MSVC)
+  set(CHOREONOID_USE_SUBSYSTEM_CONSOLE false)
+endif()
+
+set(CHOREONOID_ENABLE_GETTEXT ON)
+if(CHOREONOID_ENABLE_GETTEXT)
+  set(CHOREONOID_GETTEXT_MSGFMT_EXECUTABLE "/usr/bin/msgfmt")
+endif()
+
+include(${CMAKE_CURRENT_LIST_DIR}/ChoreonoidFindQt.cmake)
+if(NOT CHOREONOID_SKIP_QT_CONFIG)
+  choreonoid_find_qt_package(Core Gui Widgets Network)
+  set(CMAKE_AUTOMOC OFF)
+  list(APPEND CHOREONOID_COMPILE_DEFINITIONS ${CHOREONOID_QT_COMPILE_DEFINITIONS})
+  #target_compile_definitions(Choreonoid::CnoidBase INTERFACE ${CHOREONOID_QT_COMPILE_DEFINITIONS})
+  set_property(TARGET Choreonoid::CnoidBase APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS
+    ${CHOREONOID_QT_COMPILE_DEFINITIONS})
+  target_link_libraries(Choreonoid::CnoidBase INTERFACE ${CHOREONOID_QT_LIBRARIES})
+endif()
+
+add_library(Choreonoid::CnoidBody SHARED IMPORTED GLOBAL)
+if(WIN32)
+  set_target_properties(Choreonoid::CnoidBody PROPERTIES
+    IMPORTED_LOCATION ${CHOREONOID_BIN_DIR}/CnoidBody.dll
+    IMPORTED_IMPLIB ${CHOREONOID_LIB_DIR}/CnoidBody.lib
+    IMPORTED_LOCATION_DEBUG ${CHOREONOID_BIN_DIR}/CnoidBodyd.dll
+    IMPORTED_IMPLIB_DEBUG ${CHOREONOID_LIB_DIR}/CnoidBodyd.lib
+    IMPORTED_CONFIGURATIONS "RELEASE;DEBUG")
+else()
+  set_target_properties(Choreonoid::CnoidBody PROPERTIES
+    IMPORTED_LOCATION ${CHOREONOID_LIB_DIR}/libCnoidBody.so)
+endif()
+target_link_libraries(Choreonoid::CnoidBody INTERFACE Choreonoid::CnoidUtil)
+set(CHOREONOID_BODY_LIBRARIES Choreonoid::CnoidBody)
+
+add_library(Choreonoid::CnoidBodyPlugin SHARED IMPORTED GLOBAL)
+if(WIN32)
+  set_target_properties(Choreonoid::CnoidBodyPlugin PROPERTIES
+    IMPORTED_LOCATION ${CHOREONOID_PLUGIN_DIR}/CnoidBodyPlugin.dll
+    IMPORTED_IMPLIB ${CHOREONOID_LIB_DIR}/CnoidBodyPlugin.lib
+    IMPORTED_LOCATION_DEBUG ${CHOREONOID_PLUGIN_DIR}/CnoidBodyPlugind.dll
+    IMPORTED_IMPLIB_DEBUG ${CHOREONOID_LIB_DIR}/CnoidBodyPlugind.lib
+    IMPORTED_CONFIGURATIONS "RELEASE;DEBUG")
+else()
+  set_target_properties(Choreonoid::CnoidBodyPlugin PROPERTIES
+    IMPORTED_LOCATION ${CHOREONOID_PLUGIN_DIR}/libCnoidBodyPlugin.so)
+endif()
+target_link_libraries(Choreonoid::CnoidBodyPlugin INTERFACE Choreonoid::CnoidBase Choreonoid::CnoidBody)
+set(CHOREONOID_BODY_PLUGIN_LIBRARIES Choreonoid::CnoidBodyPlugin)
+
+include(${CMAKE_CURRENT_LIST_DIR}/ChoreonoidBasicBuildFunctions.cmake)
+
+set(CHOREONOID_ENABLE_PYTHON ON)
+if(CHOREONOID_ENABLE_PYTHON)
+  add_library(Choreonoid::CnoidPyUtil SHARED IMPORTED GLOBAL)
+  add_library(Choreonoid::CnoidPyBase SHARED IMPORTED GLOBAL)
+  if(WIN32)
+    set_target_properties(Choreonoid::CnoidPyUtil PROPERTIES
+      IMPORTED_LOCATION ${CHOREONOID_BIN_DIR}/CnoidPyUtil.dll
+      IMPORTED_IMPLIB ${CHOREONOID_LIB_DIR}/CnoidPyUtil.lib
+      IMPORTED_LOCATION_DEBUG ${CHOREONOID_BIN_DIR}/CnoidPyUtild.dll
+      IMPORTED_IMPLIB_DEBUG ${CHOREONOID_LIB_DIR}/CnoidPyUtild.lib
+      IMPORTED_CONFIGURATIONS "RELEASE;DEBUG")
+    set_target_properties(Choreonoid::CnoidPyBase PROPERTIES
+      IMPORTED_LOCATION ${CHOREONOID_BIN_DIR}/CnoidPyBase.dll
+      IMPORTED_IMPLIB ${CHOREONOID_LIB_DIR}/CnoidPyBase.lib
+      IMPORTED_LOCATION_DEBUG ${CHOREONOID_BIN_DIR}/CnoidPyBased.dll
+      IMPORTED_IMPLIB_DEBUG ${CHOREONOID_LIB_DIR}/CnoidPyBased.lib
+      IMPORTED_CONFIGURATIONS "RELEASE;DEBUG")
+  else()
+    set_target_properties(Choreonoid::CnoidPyUtil PROPERTIES
+      IMPORTED_LOCATION ${CHOREONOID_LIB_DIR}/libCnoidPyUtil.so)
+    set_target_properties(Choreonoid::CnoidPyBase PROPERTIES
+      IMPORTED_LOCATION ${CHOREONOID_LIB_DIR}/libCnoidPyBase.so)
+  endif()
+  target_link_libraries(Choreonoid::CnoidPyUtil INTERFACE "/usr/lib/x86_64-linux-gnu/libpython3.8.so")
+  target_link_libraries(Choreonoid::CnoidPyBase INTERFACE Choreonoid::CnoidPyUtil)
+  set(CHOREONOID_PYTHON_UTIL_LIBRARIES Choreonoid::CnoidPyUtil)
+  set(CHOREONOID_PYTHON_LIBRARIES Choreonoid::CnoidPyBase)
+  set(CHOREONOID_PYTHON_SUBDIR "lib/choreonoid-1.8/python")
+  set(CHOREONOID_USE_PYBIND11 ON) # This variable is kept for backward compatibility
+  include(${CMAKE_CURRENT_LIST_DIR}/ChoreonoidPythonBuildFunctions.cmake)
+endif()
+
+set(CHOREONOID_ENABLE_CORBA )
+if(CHOREONOID_ENABLE_CORBA)
+  set(CHOREONOID_OMNIORB_DIR "")
+  set(CHOREONOID_OMNIORB_BINARY_DIR "")
+  set(CHOREONOID_CORBA_LIBRARIES CnoidCorba "")
+  set(CHOREONOID_CORBA_PLUGIN_LIBRARIES CnoidCorbaPlugin ${CHOREONOID_CORBA_LIBRARIES})
+  include(${CMAKE_CURRENT_LIST_DIR}/ChoreonoidCorbaBuildFunctions.cmake)
+endif()
+
+file(GLOB extmodules LIST_DIRECTORIES false "${CMAKE_CURRENT_LIST_DIR}/ext/*.cmake")
+foreach(module ${extmodules})
+  include(${module})
+endforeach()

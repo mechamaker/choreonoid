@@ -1,0 +1,15 @@
+-I/home/hayat/choreonoid/build
+-I/home/hayat/choreonoid/build/include
+-I/home/hayat/choreonoid
+-I/home/hayat/choreonoid/include
+-I/usr/include
+-I/usr/include
+-I/usr/include/python3.8
+-I/home/hayat/choreonoid/thirdparty/pybind11-2.6.1/include
+-I/usr/include
+-I/usr/include/eigen3
+-I/usr/include
+-D$<$<CONFIG:Debug>:CNOID_DEBUG>
+-o
+/home/hayat/choreonoid/build/src/Base/moc_Menu.cpp
+/home/hayat/choreonoid/src/Base/Menu.h

@@ -1,0 +1,17 @@
+# pkg-config source file
+
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/choreonoid-1.8
+subdir=choreonoid-1.8
+sharedir=/usr/local/share/choreonoid-1.8
+plugindir=${exec_prefix}/lib/choreonoid-1.8
+
+Name: choreonoid-base
+Description: Choreonoid base library
+Version: 1.8.0
+Requires: choreonoid-util = 1.8.0 Qt5Core >= 5.2.0 Qt5Gui >= 5.2.0 Qt5OpenGL >= 5.2.0 Qt5Network >= 5.2.0
+Conflicts:
+Libs: -L${plugindir} -lCnoidBase
+Cflags: -DQT_NO_KEYWORDS

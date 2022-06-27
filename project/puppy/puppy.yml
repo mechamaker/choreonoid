@@ -1,0 +1,77 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: puppy
+
+links:
+  -
+    name: body
+    jointType: free
+    translation: [ 0, 0, 0.121972993297 ]
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 0.261
+    inertia: [
+      0.000946444809, -0.000000480850,  0.00000011460,
+     -0.000000480850,  0.000109541334,  0.000127532610, 
+      0.00000011460,  0.000127532610,   0.000978146233 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "puppy.dae"
+          node: body
+      -
+        type: Visual
+        resource:
+          uri: "puppy.dae"
+          node: body
+  -
+    name: wheel_right
+    parent: body
+    jointType: revolute
+    jointAxis: -X
+    jointRange: [ -720, 720 ]
+    jointId: 0
+    translation: [ -0.033959, -0.014173, -0.092973]
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 0.0247
+    inertia: [
+      0.000010414137, 0,   0,
+      0,   0.000005670194, 0,
+      0,   0,   0.000005670194]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "puppy.dae"
+          node: wheel_right
+      -
+        type: Visual
+        resource:
+          uri: "puppy.dae"
+          node: wheel_right
+  -
+    name: wheel_left
+    parent: body
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -720, 720 ]
+    jointId: 1
+    translation: [ 0.033959, -0.014173, -0.092973]
+    centerOfMass: [ 0, 0, 0 ]
+    mass: 0.0247
+    inertia: [
+      0.000010414137, 0,   0,
+      0,   0.000005670194, 0,
+      0,   0,   0.000005670194]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "puppy.dae"
+          node: wheel_left
+      -
+        type: Visual
+        resource:
+          uri: "puppy.dae"
+          node: wheel_left
