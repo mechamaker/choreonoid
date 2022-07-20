@@ -5,8 +5,14 @@
 #include <vector>
 
 using namespace cnoid;
+//南雲
+const double F[] = {0, -1.7711, -0.0317, -0.3206}; //Φ θ dΦ dθ      　θ dθ dΦ
 
-const double F[] = {-0.001, -1.3531, -0.0051, -0.2270};
+//計測結果に基づくやつ
+//const double F[] = {0, -1.7711, -0.0317, -0.3206}; //Φ θ dΦ dθ      　θ dθ dΦ
+
+//仕様書に基づくやつ
+//const double F[] = {0, -1.7711, -0.0317, -0.3206}; //Φ θ dΦ dθ      　θ dθ dΦ
 
 class PendulumController : public cnoid::SimpleController
 {

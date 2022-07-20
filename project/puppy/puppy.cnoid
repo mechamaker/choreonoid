@@ -86,11 +86,11 @@ items:
           data: 
             file: "puppy.yml"
             format: CHOREONOID-BODY
-            rootPosition: [ 0.000409275642, 0.148794068, 0.0172676094 ]
+            rootPosition: [ 0, 0, 0.121972993 ]
             rootAttitude: [ 
-              0.99999434, 2.95679631e-07, 0.00336452591, 
-              -0.00336452592, 0.000106718848, 0.999994334, 
-              -6.3380375e-08, -0.999999994, 0.000106719239 ]
+              1, 0, 0, 
+              0, 0.988493887, -0.15126082, 
+              0, 0.15126082, 0.988493887 ]
             jointDisplacements: [ 0, 0 ]
             jointPositions: [ 0, 0 ]
             initialRootPosition: [ 0, 0, 0.121972993 ]
@@ -189,7 +189,7 @@ views:
         - 
           camera: [ System, Perspective ]
           isCurrent: true
-          eye: [ 0.271417, 0.181158, 0.24036 ]
+          eye: [ 0.679896, 0.296649, 0.53407 ]
           direction: [ -0.776361, -0.458696, -0.432274 ]
           up: [ -0.372169, -0.219888, 0.901742 ]
         - 
@@ -301,7 +301,7 @@ views:
     class: PythonConsoleView
 toolbars: 
   "TimeBar": 
-    current_time: 5.976
+    current_time: 0
     min_time: 0
     max_time: 17.766
     frame_rate: 1000
