@@ -1,0 +1,458 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: leg
+
+links:
+##########################################################
+  -
+    name: body
+    jointType: free
+    jointAxis: Z
+    jointId: 0
+    translation: [ 0, 0, 0.5 ]
+    centerOfMass: [ -0.001903460000, -0.011356670000, 0 ]
+    mass: 1.5
+    inertia: [
+     0.00009479652, -0.000000000363,  0.000001754655, 
+    -0.000000000363,  0.000094353049,  -0.000000000003, 
+    0.000001754655,-0.000000000003 ,  0.000169427892 ]
+    elements:
+      # -
+      #   type: RateGyroSensor
+      #   name: GyroSensor
+      #   id: 0
+      -
+        type: Collision
+        resource:
+          uri: "body.dae"
+          node: body
+      -
+        type: Visual
+        resource:
+          uri: "body.dae"
+          node: body
+##########################################################
+  -
+    name: joint1-1
+    parent: body
+    jointType: fixed
+    jointId: 1
+    translation: [ 0.112, 0, 0 ]
+    centerOfMass: [ -0.001903460000, -0.011356670000, 0 ]
+    mass: 0.217954
+    inertia: [
+     0.00009479652, -0.000000000363,  0.000001754655, 
+    -0.000000000363,  0.000094353049,  -0.000000000003, 
+    0.000001754655,-0.000000000003 ,  0.000169427892 ]
+    elements:
+      # -
+      #   type: RateGyroSensor
+      #   name: GyroSensor
+      #   id: 0
+      -
+        type: Collision
+        resource:
+          uri: "leg_left.dae"
+          node: joint1
+      -
+        type: Visual
+        resource:
+          uri: "leg_left.dae"
+          node: joint1
+
+  -
+    name: joint1-2
+    parent: joint1-1
+    jointType: revolute
+    jointAxis: Y
+    jointRange: [ -180, 180 ]
+    jointId: 2
+    translation: [ 0, 0, 0 ]
+    centerOfMass: [ -0.032185, 0, -0.0373597 ]
+    mass: 0.273477
+    inertia: [
+      0.000266865106, -0.000000000058,  -0.000050960701,
+      -0.000000000058 , 0.000235541997, 0.000000000277, 
+      -0.000050960701, 0.000000000277 , 0.000186640921, ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_left.dae"
+          node: joint2
+      -
+        type: Visual
+        resource:
+          uri: "leg_left.dae"
+          node: joint2
+
+  -
+    name: joint1-3
+    parent: joint1-2
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -180, 180 ]
+    jointId: 3
+    translation: [ 0.0485 , -0.0475, 0 ]
+    centerOfMass: [ -0.019826, -0.003563, 0.13038 ]
+    mass: 0.782385
+    inertia: [
+      0.0164250758, 0.000019398948,  -0.000736222605,
+      0.000019398948, 0.0163211912,    0.000161913317,
+      -0.000736222605,0.000161913317 , 0.000369028675 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_left.dae"
+          node: joint3
+      -
+        type: Visual
+        resource:
+          uri: "leg_left.dae"
+          node: joint3
+
+  -
+    name: joint1-4
+    parent: joint1-3
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -180, 180 ]
+    jointId: 4
+    translation: [ 0.0124  , 0.400, 0 ]
+    centerOfMass: [ 0.0, 0.018908, -0.109255 ]
+    mass: 0.370933
+    inertia: [
+      0.00496799361,  0.000000907817, -0.000004669474, 
+      0.00000090781,  0.00486535635,  -0.000094357322,
+      0.000000907817, -0.000094357322,  0.000119069872 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_left.dae"
+          node: joint4
+      -
+        type: Visual
+        resource:
+          uri: "leg_left.dae"
+          node: joint4
+##########################################################
+  -
+    name: joint2-1
+    parent: body
+    jointType: fixed
+    jointId: 5
+    translation: [ -0.112, 0, 0]
+    centerOfMass: [ -0.001903460000, -0.011356670000, 0 ]
+    mass: 0.217954
+    inertia: [
+    0.00009479652, -0.000000000363,  0.000001754655, 
+    -0.000000000363,  0.000094353049,  -0.000000000003, 
+    0.000001754655,-0.000000000003 ,  0.000169427892 ]
+    elements:
+      # -
+      #   type: RateGyroSensor
+      #   name: GyroSensor
+      #   id: 0
+      -
+        type: Collision
+        resource:
+          uri: "leg_right.dae"
+          node: joint1
+      -
+        type: Visual
+        resource:
+          uri: "leg_right.dae"
+          node: joint1
+
+  -
+    name: joint2-2
+    parent: joint2-1
+    jointType: revolute
+    jointAxis: Y
+    jointRange: [ -180, 180 ]
+    jointId: 6
+    translation: [ 0, 0, 0 ]
+    centerOfMass: [ -0.032185, 0, -0.0373597 ]
+    mass: 0.273477
+    inertia: [
+      0.000266865106, -0.000000000058,  -0.000050960701,
+      -0.000000000058 , 0.000235541997, 0.000000000277, 
+      -0.000050960701, 0.000000000277 , 0.000186640921, ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_right.dae"
+          node: joint2
+      -
+        type: Visual
+        resource:
+          uri: "leg_right.dae"
+          node: joint2
+
+  -
+    name: joint2-3
+    parent: joint2-2
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -180, 180 ]
+    jointId: 7
+    translation: [ -0.0485 , -0.0475, 0 ]
+    centerOfMass: [ -0.019826, -0.003563, 0.13038 ]
+    mass: 0.782385
+    inertia: [
+      0.0164250758, 0.000019398948,  -0.000736222605,
+      0.000019398948, 0.0163211912,    0.000161913317,
+      -0.000736222605,0.000161913317 , 0.000369028675 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_right.dae"
+          node: joint3
+      -
+        type: Visual
+        resource:
+          uri: "leg_right.dae"
+          node: joint3
+
+  -
+    name: joint2-4
+    parent: joint2-3
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -180, 180 ]
+    jointId: 8
+    translation: [ -0.0124  , 0.400, 0 ]
+    centerOfMass: [ 0.0, 0.018908, -0.109255 ]
+    mass: 0.370933
+    inertia: [
+      0.00496799361,  0.000000907817, -0.000004669474, 
+      0.00000090781,  0.00486535635,  -0.000094357322,
+      0.000000907817, -0.000094357322,  0.000119069872 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_right.dae"
+          node: joint4
+      -
+        type: Visual
+        resource:
+          uri: "leg_right.dae"
+          node: joint4
+##########################################################
+  -
+    name: joint3-1
+    parent: body
+    jointType: fixed
+    jointId: 9
+    translation: [ 0.112, 0.500, 0 ]
+    centerOfMass: [ -0.001903460000, -0.011356670000, 0 ]
+    mass: 0.217954
+    inertia: [
+     0.00009479652, -0.000000000363,  0.000001754655, 
+    -0.000000000363,  0.000094353049,  -0.000000000003, 
+    0.000001754655,-0.000000000003 ,  0.000169427892 ]
+    elements:
+      # -
+      #   type: RateGyroSensor
+      #   name: GyroSensor
+      #   id: 0
+      -
+        type: Collision
+        resource:
+          uri: "leg_left.dae"
+          node: joint1
+      -
+        type: Visual
+        resource:
+          uri: "leg_left.dae"
+          node: joint1
+
+  -
+    name: joint3-2
+    parent: joint3-1
+    jointType: revolute
+    jointAxis: Y
+    jointRange: [ -180, 180 ]
+    jointId: 10
+    translation: [ 0, 0, 0 ]
+    centerOfMass: [ -0.032185, 0, -0.0373597 ]
+    mass: 0.273477
+    inertia: [
+      0.000266865106, -0.000000000058,  -0.000050960701,
+      -0.000000000058 , 0.000235541997, 0.000000000277, 
+      -0.000050960701, 0.000000000277 , 0.000186640921, ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_left.dae"
+          node: joint2
+      -
+        type: Visual
+        resource:
+          uri: "leg_left.dae"
+          node: joint2
+
+  -
+    name: joint3-3
+    parent: joint3-2
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -180, 180 ]
+    jointId: 11
+    translation: [ 0.0485 , -0.0475, 0 ]
+    centerOfMass: [ -0.019826, -0.003563, 0.13038 ]
+    mass: 0.782385
+    inertia: [
+      0.0164250758, 0.000019398948,  -0.000736222605,
+      0.000019398948, 0.0163211912,    0.000161913317,
+      -0.000736222605,0.000161913317 , 0.000369028675 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_left.dae"
+          node: joint3
+      -
+        type: Visual
+        resource:
+          uri: "leg_left.dae"
+          node: joint3
+
+  -
+    name: joint3-4
+    parent: joint3-3
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -180, 180 ]
+    jointId: 12
+    translation: [ 0.0124  , 0.400, 0 ]
+    centerOfMass: [ 0.0, 0.018908, -0.109255 ]
+    mass: 0.370933
+    inertia: [
+      0.00496799361,  0.000000907817, -0.000004669474, 
+      0.00000090781,  0.00486535635,  -0.000094357322,
+      0.000000907817, -0.000094357322,  0.000119069872 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_left.dae"
+          node: joint4
+      -
+        type: Visual
+        resource:
+          uri: "leg_left.dae"
+          node: joint4
+##########################################################
+  -
+    name: joint4-1
+    parent: body
+    jointType: fixed
+    jointId: 13
+    translation: [ -0.112, 0.500, 0]
+    centerOfMass: [ -0.001903460000, -0.011356670000, 0 ]
+    mass: 0.217954
+    inertia: [
+    0.00009479652, -0.000000000363,  0.000001754655, 
+    -0.000000000363,  0.000094353049,  -0.000000000003, 
+    0.000001754655,-0.000000000003 ,  0.000169427892 ]
+    elements:
+      # -
+      #   type: RateGyroSensor
+      #   name: GyroSensor
+      #   id: 0
+      -
+        type: Collision
+        resource:
+          uri: "leg_right.dae"
+          node: joint1
+      -
+        type: Visual
+        resource:
+          uri: "leg_right.dae"
+          node: joint1
+
+  -
+    name: joint4-2
+    parent: joint4-1
+    jointType: revolute
+    jointAxis: Y
+    jointRange: [ -180, 180 ]
+    jointId: 14
+    translation: [ 0, 0, 0 ]
+    centerOfMass: [ -0.032185, 0, -0.0373597 ]
+    mass: 0.273477
+    inertia: [
+      0.000266865106, -0.000000000058,  -0.000050960701,
+      -0.000000000058 , 0.000235541997, 0.000000000277, 
+      -0.000050960701, 0.000000000277 , 0.000186640921, ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_right.dae"
+          node: joint2
+      -
+        type: Visual
+        resource:
+          uri: "leg_right.dae"
+          node: joint2
+
+  -
+    name: joint4-3
+    parent: joint4-2
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -180, 180 ]
+    jointId: 15
+    translation: [ -0.0485 , -0.0475, 0 ]
+    centerOfMass: [ -0.019826, -0.003563, 0.13038 ]
+    mass: 0.782385
+    inertia: [
+      0.0164250758, 0.000019398948,  -0.000736222605,
+      0.000019398948, 0.0163211912,    0.000161913317,
+      -0.000736222605,0.000161913317 , 0.000369028675 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_right.dae"
+          node: joint3
+      -
+        type: Visual
+        resource:
+          uri: "leg_right.dae"
+          node: joint3
+
+  -
+    name: joint4-4
+    parent: joint4-3
+    jointType: revolute
+    jointAxis: X
+    jointRange: [ -180, 180 ]
+    jointId: 16
+    translation: [ -0.0124  , 0.400, 0 ]
+    centerOfMass: [ 0.0, 0.018908, -0.109255 ]
+    mass: 0.370933
+    inertia: [
+      0.00496799361,  0.000000907817, -0.000004669474, 
+      0.00000090781,  0.00486535635,  -0.000094357322,
+      0.000000907817, -0.000094357322,  0.000119069872 ]
+    elements:
+      -
+        type: Collision
+        resource:
+          uri: "leg_right.dae"
+          node: joint4
+      -
+        type: Visual
+        resource:
+          uri: "leg_right.dae"
+          node: joint4
